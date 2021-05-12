@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'find-your-repo';
+  isSearching = false;
+
+  search = (value: string) => {
+    console.log('Val: ', value);
+  };
 }
