@@ -10,5 +10,11 @@
       [isLoading]="isSearching"
       (onSearch)="search($event)"
     ></app-search>
+    <div *ngFor="let item of searchResults$ | async">
+      <span
+        ><b>{{ item.type }}</b></span
+      >{{ ' || ' }}
+      <span>{{ item.name }}</span>
+    </div>
   </app-body>
 </section>
