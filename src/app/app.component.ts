@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { GithubService } from './services/github.service';
-import { Observable } from 'rxjs';
-import { Repository } from './model/repository';
-import { User } from './model/user';
+import { SearchItem } from './utils/types';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +9,21 @@ import { User } from './model/user';
 })
 export class AppComponent {
   isSearching = false;
+  searchResults: SearchItem[] = [];
   constructor(private githubService: GithubService) {}
 
-  searchResults$: Observable<(Repository | User)[]>;
-
-  search = (value: string) => {
-    this.searchResults$ = this.githubService.search(value);
+  onSearch = async (value: string) => {
+    if (value.length < 3) {
+      this.searchResults = [];
+      return;
+    }
+    this.isSearching = true;
+    try {
+      this.searchResults = await this.githubService.search(value).toPromise();
+    } catch (e) {
+      // TODO: catch
+    } finally {
+      this.isSearching = false;
+    }
   };
 }

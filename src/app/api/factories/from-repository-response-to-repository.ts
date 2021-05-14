@@ -1,6 +1,6 @@
 import { RepositoryResponse } from '../responses/repository-response';
 import { Repository } from '../../model/repository';
-import { SearchItemType } from '../../model/search-item';
+import { ItemType } from '../../model/item';
 
 export const fromRepositoryResponseToRepository = (
   response: RepositoryResponse[]
@@ -11,10 +11,11 @@ export const fromRepositoryResponseToRepository = (
 
   return response.map((repository) => {
     return {
+      id: `repo-${repository.id}`,
       name: repository.name,
-      url: repository.url,
+      url: repository.svn_url,
       language: repository.language,
-      type: SearchItemType.REPO,
+      type: ItemType.REPO,
     };
   });
 };

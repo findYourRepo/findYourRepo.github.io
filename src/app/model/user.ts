@@ -1,5 +1,5 @@
-import { SearchItem } from './search-item';
+import { Item } from './item';
 
-export interface User extends SearchItem {
+export interface User extends Item {
   avatar: string;
 }

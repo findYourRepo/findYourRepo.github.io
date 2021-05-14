@@ -1,5 +1,5 @@
-import { SearchItem } from './search-item';
+import { Item } from './item';
 
-export interface Repository extends SearchItem {
+export interface Repository extends Item {
   language: string;
 }

@@ -1,0 +1,53 @@
+.card {
+  position: absolute;
+  width: 100%;
+  margin: 12px 0;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.card-content {
+  padding: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.search-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  border-bottom: 1px solid #eeeeee;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.search-item.is-selected {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.search-item-avatar {
+  width: 48px;
+  height: 48px;
+  margin-right: 16px;
+}
+
+.search-item-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.search-item-title {
+  max-height: 24px;
+  overflow: hidden;
+}
+
+.search-item-type {
+  max-height: 24px;
+  overflow: hidden;
+}

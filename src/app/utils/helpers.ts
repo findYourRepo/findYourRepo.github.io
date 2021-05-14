@@ -1,4 +1,4 @@
-import { SearchItem } from '../model/search-item';
+import { SearchItem } from './types';
 
 export const sortSearchItemsAlphabetically = (
   item1: SearchItem,

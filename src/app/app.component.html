@@ -1,4 +1,4 @@
-<section class="hero is-info is-fullheight">
+<section class="hero is-info is-fullheight" style="height: 100vh; width: 100vw">
   <app-head></app-head>
   <app-body>
     <h1 class="title is-1">Find your repo!</h1>
@@ -8,13 +8,8 @@
     </h2>
     <app-search
       [isLoading]="isSearching"
-      (onSearch)="search($event)"
+      [searchResults]="searchResults"
+      (search)="onSearch($event)"
     ></app-search>
-    <div *ngFor="let item of searchResults$ | async">
-      <span
-        ><b>{{ item.type }}</b></span
-      >{{ ' || ' }}
-      <span>{{ item.name }}</span>
-    </div>
   </app-body>
 </section>

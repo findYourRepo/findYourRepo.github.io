@@ -1,7 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { debounceTime, filter, throttleTime } from 'rxjs/operators';
-import { NgModel } from '@angular/forms';
-import { Subject } from 'rxjs';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { SearchItem } from '../../utils/types';
 
 @Component({
   selector: 'app-search',
@@ -12,24 +19,21 @@ export class SearchComponent implements OnInit {
   @Input()
   isLoading: boolean;
 
+  @Input()
+  searchResults: SearchItem[];
+
   @Output()
-  onSearch = new EventEmitter<string>();
-  onSearchThrottler: Subject<string> = new Subject<string>();
+  search = new EventEmitter<string>();
 
-  phrase = '';
-
-  constructor() {
-    this.onSearchThrottler
-      .pipe(
-        filter((val) => val.length > 3),
-        debounceTime(300)
-      )
-      .subscribe((value) => this.onSearch.emit(value));
-  }
+  constructor(private elRef: ElementRef) {}
 
   ngOnInit(): void {}
 
   onSearchChange = (event: string) => {
-    this.onSearchThrottler.next(event);
+    this.search.emit(event);
+  };
+
+  onSelect = (item: SearchItem) => {
+    window.open(item.url, '_blank');
   };
 }

@@ -1,0 +1,29 @@
+<div class="card" [style.max-height.px]="height">
+  <div class="card-content">
+    <div class="content">
+      <div
+        class="search-item"
+        *ngFor="let item of searchResults"
+        [class.is-selected]="item.id === highlightedItemId"
+        [appFocused]="item.id === highlightedItemId"
+        (mouseover)="onHighlight(item)"
+        (click)="onSelect(item)"
+      >
+        <img
+          class="search-item-avatar"
+          *ngIf="item.type === 'user'"
+          [src]="item.avatar"
+        />
+        <img
+          class="search-item-avatar"
+          *ngIf="item.type === 'repo'"
+          src="../assets/icons/github.png"
+        />
+        <div class="search-item-info">
+          <span class="search-item-title">{{ item.name }}</span>
+          <span class="search-item-type">{{ item.type }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

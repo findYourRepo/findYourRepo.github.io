@@ -1,0 +1,11 @@
+<div class="field">
+  <div class="control is-large" [class.is-loading]="isLoading">
+    <input
+      [(ngModel)]="phrase"
+      (ngModelChange)="onSearchChange($event)"
+      class="input is-large is-info"
+      type="text"
+      placeholder="Type keyword here..."
+    />
+  </div>
+</div>
