@@ -1,9 +1,15 @@
-<div class="card" [style.max-height.px]="height">
+<div
+  class="card"
+  [style.max-height.px]="height"
+  [style.margin-top.px]="verticalMargin"
+  [style.margin-bottom.px]="verticalMargin"
+>
   <div class="card-content">
     <div class="content">
       <div
         class="search-item"
         *ngFor="let item of searchResults"
+        id="search-item-{{ item.id }}"
         [class.is-selected]="item.id === highlightedItemId"
         [appFocused]="item.id === highlightedItemId"
         (mouseover)="onHighlight(item)"
@@ -11,13 +17,9 @@
       >
         <img
           class="search-item-avatar"
-          *ngIf="item.type === 'user'"
-          [src]="item.avatar"
-        />
-        <img
-          class="search-item-avatar"
-          *ngIf="item.type === 'repo'"
-          src="../assets/icons/github.png"
+          [src]="
+            item.type === 'user' ? item.avatar : '../assets/icons/github.png'
+          "
         />
         <div class="search-item-info">
           <span class="search-item-title">{{ item.name }}</span>

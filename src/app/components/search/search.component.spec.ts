@@ -1,22 +1,29 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SearchComponent } from './search.component';
+import { SearchFieldComponent } from './search-field/search-field.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
+import { FormsModule } from '@angular/forms';
+import { ItemType } from '../../model/item';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
   let fixture: ComponentFixture<SearchComponent>;
-  let control: HTMLDivElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SearchComponent],
+      declarations: [
+        SearchComponent,
+        SearchFieldComponent,
+        SearchResultsComponent,
+      ],
+      imports: [FormsModule],
     }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SearchComponent);
     component = fixture.componentInstance;
-    control = fixture.nativeElement.querySelector('.control');
     fixture.detectChanges();
   });
 
@@ -24,10 +31,27 @@ describe('SearchComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should hide/show spinner depend on isLoading attribute', () => {
-    expect(control.className.indexOf('is-loading') > 0).toBeFalsy();
-    component.isLoading = true;
+  it('should emit search event after calling onSearch method', () => {
+    const testPhrase = 'Test phrase';
+    spyOn(component.search, 'emit');
+    component.onSearchChange(testPhrase);
+
     fixture.detectChanges();
-    expect(control.className.indexOf('is-loading') > 0).toBeTruthy();
+    expect(component.search.emit).toHaveBeenCalledWith(testPhrase);
+  });
+
+  it('should emit selectItem event after calling osSelect method', () => {
+    const testItem = {
+      id: 'user-10097549',
+      name: 'jaroslawkrol',
+      url: 'https://github.com/jaroslawkrol',
+      avatar: 'https://avatars.githubusercontent.com/u/10097549?v=4',
+      type: ItemType.USER,
+    };
+    spyOn(component.selectItem, 'emit');
+    component.onSelect(testItem);
+
+    fixture.detectChanges();
+    expect(component.selectItem.emit).toHaveBeenCalledWith(testItem);
   });
 });

@@ -25,7 +25,10 @@ export class SearchComponent implements OnInit {
   @Output()
   search = new EventEmitter<string>();
 
-  constructor(private elRef: ElementRef) {}
+  @Output()
+  selectItem = new EventEmitter<SearchItem>();
+
+  constructor() {}
 
   ngOnInit(): void {}
 
@@ -34,6 +37,6 @@ export class SearchComponent implements OnInit {
   };
 
   onSelect = (item: SearchItem) => {
-    window.open(item.url, '_blank');
+    this.selectItem.emit(item);
   };
 }

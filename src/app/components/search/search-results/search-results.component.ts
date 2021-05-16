@@ -1,4 +1,5 @@
 import {
+  AfterContentInit,
   AfterViewInit,
   Component,
   ElementRef,
@@ -15,7 +16,7 @@ import { SearchItem } from '../../../utils/types';
   templateUrl: './search-results.component.html',
   styleUrls: ['./search-results.component.css'],
 })
-export class SearchResultsComponent implements OnInit, AfterViewInit {
+export class SearchResultsComponent implements OnInit, AfterContentInit {
   @Input()
   searchResults: SearchItem[];
 
@@ -23,7 +24,8 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
   selectItem = new EventEmitter<SearchItem>();
 
   highlightedItemId: string | null;
-  height: number;
+  height = 0;
+  verticalMargin = 12;
 
   @HostListener('window:keydown', ['$event'])
   handleKeydown = (event: KeyboardEvent) => {
@@ -52,10 +54,8 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {}
 
-  ngAfterViewInit(): void {
-    // TODO: extract adjusting height to separate function and constants
-    const { top } = this.elRef.nativeElement.getBoundingClientRect();
-    this.height = window.innerHeight - top - 24;
+  ngAfterContentInit(): void {
+    this.calculateMaxHeightOfComponent();
   }
 
   onHighlight = (item: SearchItem) => {
@@ -66,7 +66,7 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
     this.selectItem.emit(item);
   };
 
-  private highlightNextItem = () => {
+  highlightNextItem = () => {
     if (!this.highlightedItemId && this.searchResults.length) {
       this.highlightFirstItem();
       return;
@@ -112,5 +112,10 @@ export class SearchResultsComponent implements OnInit, AfterViewInit {
       );
       this.onSelect(highlightedItem);
     }
+  };
+
+  private calculateMaxHeightOfComponent = () => {
+    const { top } = this.elRef.nativeElement.getBoundingClientRect();
+    this.height = window.innerHeight - top - this.verticalMargin * 2;
   };
 }

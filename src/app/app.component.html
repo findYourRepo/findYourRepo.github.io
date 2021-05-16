@@ -1,4 +1,4 @@
-<section class="hero is-info is-fullheight" style="height: 100vh; width: 100vw">
+<section class="hero is-info is-fullheight">
   <app-head></app-head>
   <app-body>
     <h1 class="title is-1">Find your repo!</h1>
@@ -10,6 +10,7 @@
       [isLoading]="isSearching"
       [searchResults]="searchResults"
       (search)="onSearch($event)"
+      (selectItem)="onSelectItem($event)"
     ></app-search>
   </app-body>
 </section>

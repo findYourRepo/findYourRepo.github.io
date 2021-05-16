@@ -13,12 +13,12 @@ export class SearchFieldComponent implements OnInit {
 
   @Output()
   search = new EventEmitter<string>();
-  searchThrottler: Subject<string> = new Subject<string>();
+  private searchDebouncer: Subject<string> = new Subject<string>();
 
-  phrase: string;
+  phrase = '';
 
   constructor() {
-    this.searchThrottler
+    this.searchDebouncer
       .pipe(debounceTime(300))
       .subscribe((value) => this.search.emit(value));
   }
@@ -26,6 +26,6 @@ export class SearchFieldComponent implements OnInit {
   ngOnInit(): void {}
 
   onSearchChange = (event: string) => {
-    this.searchThrottler.next(event);
+    this.searchDebouncer.next(event);
   };
 }
