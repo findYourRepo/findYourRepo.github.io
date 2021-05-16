@@ -6,26 +6,60 @@
 >
   <div class="card-content">
     <div class="content">
-      <div
-        class="search-item"
-        *ngFor="let item of searchResults"
-        id="search-item-{{ item.id }}"
-        [class.is-selected]="item.id === highlightedItemId"
-        [appFocused]="item.id === highlightedItemId"
-        (mouseover)="onHighlight(item)"
-        (click)="onSelect(item)"
-      >
-        <img
-          class="search-item-avatar"
-          [src]="
-            item.type === 'user' ? item.avatar : '../assets/icons/github.png'
-          "
-        />
-        <div class="search-item-info">
-          <span class="search-item-title">{{ item.name }}</span>
-          <span class="search-item-type">{{ item.type }}</span>
+      <ng-container *ngIf="error; else results">
+        <div class="search-item">
+          <img
+            class="search-item-avatar"
+            [src]="'../assets/icons/github.png'"
+          />
+          <div class="search-item-info">
+            <span class="search-item-title">Error</span>
+            <span class="search-item-type">{{ error }}</span>
+          </div>
         </div>
-      </div>
+      </ng-container>
+      <ng-template #results>
+        <ng-container
+          *ngIf="isFetched && searchResults.length === 0; else resultList"
+        >
+          <div class="search-item">
+            <img
+              class="search-item-avatar"
+              [src]="'../assets/icons/github.png'"
+            />
+            <div class="search-item-info">
+              <span class="search-item-title">No items found</span>
+              <span class="search-item-type"
+                >Sorry mate... Maybe try changing your keywords</span
+              >
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #resultList>
+          <div
+            class="search-item"
+            *ngFor="let item of searchResults"
+            id="search-item-{{ item.id }}"
+            [class.is-selected]="item.id === highlightedItemId"
+            [appFocused]="item.id === highlightedItemId"
+            (mouseover)="onHighlight(item)"
+            (click)="onSelect(item)"
+          >
+            <img
+              class="search-item-avatar"
+              [src]="
+                item.type === 'user'
+                  ? item.avatar
+                  : '../assets/icons/github.png'
+              "
+            />
+            <div class="search-item-info">
+              <span class="search-item-title">{{ item.name }}</span>
+              <span class="search-item-type">{{ item.type }}</span>
+            </div>
+          </div>
+        </ng-template>
+      </ng-template>
     </div>
   </div>
 </div>

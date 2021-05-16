@@ -20,6 +20,12 @@ export class SearchComponent implements OnInit {
   isLoading: boolean;
 
   @Input()
+  isFetched: boolean;
+
+  @Input()
+  error: string | null;
+
+  @Input()
   searchResults: SearchItem[];
 
   @Output()

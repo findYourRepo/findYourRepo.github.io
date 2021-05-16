@@ -3,6 +3,7 @@ import { GithubService } from './services/github.service';
 import { SearchItem } from './utils/types';
 import { Repository } from './model/repository';
 import { User } from './model/user';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -11,22 +12,30 @@ import { User } from './model/user';
 })
 export class AppComponent {
   isSearching = false;
+  isFetched = false;
+  error: string | null;
   searchResults: SearchItem[] = [];
+
   constructor(private githubService: GithubService) {}
 
   onSearch = async (value: string) => {
     if (value.length < 3) {
       this.searchResults = [];
+      this.isFetched = false;
+      this.error = null;
       return;
     }
     this.isSearching = true;
+    this.isFetched = false;
+    this.error = null;
     try {
       this.searchResults = await this.githubService.search(value).toPromise();
-      console.log(JSON.stringify(this.searchResults));
     } catch (e) {
-      // TODO: catch
+      this.searchResults = [];
+      this.error = e?.message ? e.message.trim() : 'Unexpected error';
     } finally {
       this.isSearching = false;
+      this.isFetched = true;
     }
   };
 

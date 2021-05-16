@@ -8,6 +8,8 @@
     </h2>
     <app-search
       [isLoading]="isSearching"
+      [isFetched]="isFetched"
+      [error]="error"
       [searchResults]="searchResults"
       (search)="onSearch($event)"
       (selectItem)="onSelectItem($event)"

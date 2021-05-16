@@ -5,6 +5,8 @@
   ></app-search-field>
   <app-search-results
     [searchResults]="searchResults"
+    [isFetched]="isFetched"
+    [error]="error"
     (selectItem)="onSelect($event)"
   ></app-search-results>
 </div>

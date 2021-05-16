@@ -20,6 +20,12 @@ export class SearchResultsComponent implements OnInit, AfterContentInit {
   @Input()
   searchResults: SearchItem[];
 
+  @Input()
+  isFetched: boolean;
+
+  @Input()
+  error: string | null;
+
   @Output()
   selectItem = new EventEmitter<SearchItem>();
 
