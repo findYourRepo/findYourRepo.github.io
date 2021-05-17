@@ -7,11 +7,12 @@
   <div class="card-content">
     <div class="content">
       <ng-container *ngIf="error; else results">
-        <div class="search-item">
-          <img
-            class="search-item-avatar"
-            [src]="'../assets/icons/github.png'"
-          />
+        <div class="search-item is-danger">
+          <fa-icon
+            class="search-item-avatar font-awesome"
+            [icon]="faExclamationTriangle"
+            [size]="'2x'"
+          ></fa-icon>
           <div class="search-item-info">
             <span class="search-item-title">Error</span>
             <span class="search-item-type">{{ error }}</span>
@@ -23,15 +24,16 @@
           *ngIf="isFetched && searchResults.length === 0; else resultList"
         >
           <div class="search-item">
-            <img
-              class="search-item-avatar"
-              [src]="'../assets/icons/github.png'"
-            />
+            <fa-icon
+              class="search-item-avatar font-awesome"
+              [icon]="faSearch"
+              [size]="'2x'"
+            ></fa-icon>
             <div class="search-item-info">
-              <span class="search-item-title">No items found</span>
-              <span class="search-item-type"
+              <span class="search-item-title"
                 >Sorry mate... Maybe try changing your keywords</span
               >
+              <span class="search-item-type">No items found</span>
             </div>
           </div>
         </ng-container>
@@ -55,7 +57,12 @@
             />
             <div class="search-item-info">
               <span class="search-item-title">{{ item.name }}</span>
-              <span class="search-item-type">{{ item.type }}</span>
+              <span
+                class="search-item-type"
+                [class.is-user]="item.type === 'user'"
+                [class.is-repo]="item.type === 'repo'"
+                >{{ item.type }}</span
+              >
             </div>
           </div>
         </ng-template>

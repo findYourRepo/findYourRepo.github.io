@@ -25,14 +25,25 @@
   cursor: pointer;
 }
 
+.search-item.is-danger {
+  color: #f14668;
+  border: 2px solid #f14668;
+}
+
 .search-item.is-selected {
-  background-color: rgba(0, 0, 0, 0.15);
+  background-color: rgba(50, 152, 220, 0.15);
 }
 
 .search-item-avatar {
   width: 48px;
   height: 48px;
   margin-right: 16px;
+}
+
+.search-item-avatar.font-awesome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .search-item-info {
@@ -43,11 +54,25 @@
 }
 
 .search-item-title {
+  font-size: 16px;
+  line-height: 24px;
   max-height: 24px;
   overflow: hidden;
 }
 
 .search-item-type {
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  line-height: 24px;
   max-height: 24px;
   overflow: hidden;
+}
+
+.search-item-type.is-user {
+  color: #3298dc;
+}
+
+.search-item-type.is-repo {
+  color: #48c774;
 }

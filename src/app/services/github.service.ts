@@ -5,7 +5,7 @@ import { Repository } from '../model/repository';
 import { UsersService } from './users.service';
 import { User } from '../model/user';
 import { RepositoriesService } from './repositories.service';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { sortSearchItemsAlphabetically } from '../utils/helpers';
 
 @Injectable({

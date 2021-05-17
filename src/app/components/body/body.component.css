@@ -1,4 +1,10 @@
 :host {
   flex: 1;
-  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.spacer {
+  transition: all 1s;
 }

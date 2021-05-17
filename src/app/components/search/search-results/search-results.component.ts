@@ -1,6 +1,5 @@
 import {
   AfterContentInit,
-  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -10,6 +9,10 @@ import {
   Output,
 } from '@angular/core';
 import { SearchItem } from '../../../utils/types';
+import {
+  faSearchMinus,
+  faExclamationTriangle,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-search-results',
@@ -17,6 +20,9 @@ import { SearchItem } from '../../../utils/types';
   styleUrls: ['./search-results.component.css'],
 })
 export class SearchResultsComponent implements OnInit, AfterContentInit {
+  faSearch = faSearchMinus;
+  faExclamationTriangle = faExclamationTriangle;
+
   // tslint:disable-next-line:variable-name
   private _searchResults: SearchItem[];
 

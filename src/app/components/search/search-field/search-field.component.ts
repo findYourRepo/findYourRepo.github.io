@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-field',
@@ -19,7 +19,7 @@ export class SearchFieldComponent implements OnInit {
 
   constructor() {
     this.searchDebouncer
-      .pipe(debounceTime(300))
+      .pipe(debounceTime(300), distinctUntilChanged())
       .subscribe((value) => this.search.emit(value));
   }
 
