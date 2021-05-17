@@ -17,8 +17,17 @@ import { SearchItem } from '../../../utils/types';
   styleUrls: ['./search-results.component.css'],
 })
 export class SearchResultsComponent implements OnInit, AfterContentInit {
-  @Input()
-  searchResults: SearchItem[];
+  // tslint:disable-next-line:variable-name
+  private _searchResults: SearchItem[];
+
+  get searchResults(): SearchItem[] {
+    return this._searchResults;
+  }
+
+  @Input('searchResults') set searchResults(items: SearchItem[]) {
+    this._searchResults = items;
+    this.highlightedItemId = null;
+  }
 
   @Input()
   isFetched: boolean;
