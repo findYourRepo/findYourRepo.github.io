@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FocusedDirective } from './directives/focused.directive';
 import { SearchFieldComponent } from './components/search/search-field/search-field.component';
 import { SearchResultsComponent } from './components/search/search-results/search-results.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { SearchResultsComponent } from './components/search/search-results/searc
     SearchFieldComponent,
     SearchResultsComponent,
   ],
-  imports: [BrowserModule, FormsModule, HttpClientModule],
+  imports: [BrowserModule, FormsModule, HttpClientModule, FontAwesomeModule],
   providers: [],
   bootstrap: [AppComponent],
 })
