@@ -1,6 +1,7 @@
 import {
   ComponentFixture,
   fakeAsync,
+  flush,
   TestBed,
   tick,
 } from '@angular/core/testing';
@@ -82,6 +83,7 @@ describe('SearchResultsComponent', () => {
     tick();
 
     expect(component.onSelect).toHaveBeenCalledWith(MOCKED_ITEMS[0]);
+    flush();
   }));
 
   it('should emit selectItem event after calling onSelect method', fakeAsync(() => {
@@ -104,7 +106,7 @@ describe('SearchResultsComponent', () => {
     );
 
     hoveredItem.dispatchEvent(
-      new MouseEvent('mouseover', {
+      new MouseEvent('mouseenter', {
         view: window,
         bubbles: true,
         cancelable: true,
@@ -114,10 +116,12 @@ describe('SearchResultsComponent', () => {
     tick();
 
     expect(component.onHighlight).toHaveBeenCalledWith(MOCKED_ITEMS[0]);
+    flush();
   }));
 
   it('should has is-selected class after calling onHighlight method', () => {
     component.searchResults = MOCKED_ITEMS;
+    component.isMouseenterDisabled = false;
     fixture.detectChanges();
 
     hoveredItem = fixture.nativeElement.querySelector(
@@ -129,6 +133,22 @@ describe('SearchResultsComponent', () => {
     fixture.detectChanges();
 
     expect(hoveredItem.className.indexOf('is-selected') > 0).toBeTruthy();
+  });
+
+  it("shouldn't has is-selected class after calling onHighlight method if mouseenter is disabled", () => {
+    component.searchResults = MOCKED_ITEMS;
+    component.isMouseenterDisabled = true;
+    fixture.detectChanges();
+
+    hoveredItem = fixture.nativeElement.querySelector(
+      `#search-item-${MOCKED_ITEMS[0].id}`
+    );
+    expect(hoveredItem.className.indexOf('is-selected') > 0).toBeFalsy();
+
+    component.onHighlight(MOCKED_ITEMS[0]);
+    fixture.detectChanges();
+
+    expect(hoveredItem.className.indexOf('is-selected') > 0).toBeFalsy();
   });
 
   it('should highlight next item after using use the down arrow', () => {

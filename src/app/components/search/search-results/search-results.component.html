@@ -44,7 +44,7 @@
             id="search-item-{{ item.id }}"
             [class.is-selected]="item.id === highlightedItemId"
             [appFocused]="item.id === highlightedItemId"
-            (mouseover)="onHighlight(item)"
+            (mouseenter)="onHighlight(item)"
             (click)="onSelect(item)"
           >
             <img

@@ -1,5 +1,6 @@
 import {
-  AfterContentInit,
+  AfterViewChecked,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -19,7 +20,7 @@ import {
   templateUrl: './search-results.component.html',
   styleUrls: ['./search-results.component.css'],
 })
-export class SearchResultsComponent implements OnInit, AfterContentInit {
+export class SearchResultsComponent implements OnInit, AfterViewChecked {
   faSearch = faSearchMinus;
   faExclamationTriangle = faExclamationTriangle;
 
@@ -31,8 +32,10 @@ export class SearchResultsComponent implements OnInit, AfterContentInit {
   }
 
   @Input('searchResults') set searchResults(items: SearchItem[]) {
+    this.disableMouseEnter();
     this._searchResults = items;
     this.highlightedItemId = null;
+    this.enableMouseEnter();
   }
 
   @Input()
@@ -47,6 +50,8 @@ export class SearchResultsComponent implements OnInit, AfterContentInit {
   highlightedItemId: string | null;
   height = 0;
   verticalMargin = 12;
+  isMouseenterDisabled = false;
+  private timer: number;
 
   @HostListener('window:keydown', ['$event'])
   handleKeydown = (event: KeyboardEvent) => {
@@ -71,16 +76,19 @@ export class SearchResultsComponent implements OnInit, AfterContentInit {
     }
   };
 
-  constructor(private elRef: ElementRef) {}
+  constructor(private elRef: ElementRef, private cdRef: ChangeDetectorRef) {}
 
   ngOnInit(): void {}
 
-  ngAfterContentInit(): void {
+  ngAfterViewChecked(): void {
     this.calculateMaxHeightOfComponent();
+    this.cdRef.detectChanges();
   }
 
   onHighlight = (item: SearchItem) => {
-    this.highlightedItemId = item.id;
+    if (!this.isMouseenterDisabled) {
+      this.highlightedItemId = item.id;
+    }
   };
 
   onSelect = (item: SearchItem) => {
@@ -88,6 +96,7 @@ export class SearchResultsComponent implements OnInit, AfterContentInit {
   };
 
   highlightNextItem = () => {
+    this.disableMouseEnter();
     if (!this.highlightedItemId && this.searchResults.length) {
       this.highlightFirstItem();
       return;
@@ -100,9 +109,11 @@ export class SearchResultsComponent implements OnInit, AfterContentInit {
       return;
     }
     this.highlightedItemId = this.searchResults[index + 1].id;
+    this.enableMouseEnter();
   };
 
   private highlightPrevItem = () => {
+    this.disableMouseEnter();
     if (!this.highlightedItemId && this.searchResults.length) {
       this.highlightLastItem();
       return;
@@ -115,6 +126,7 @@ export class SearchResultsComponent implements OnInit, AfterContentInit {
       return;
     }
     this.highlightedItemId = this.searchResults[index - 1].id;
+    this.enableMouseEnter();
   };
 
   private highlightFirstItem = () => {
@@ -138,5 +150,16 @@ export class SearchResultsComponent implements OnInit, AfterContentInit {
   private calculateMaxHeightOfComponent = () => {
     const { top } = this.elRef.nativeElement.getBoundingClientRect();
     this.height = window.innerHeight - top - this.verticalMargin * 2;
+  };
+
+  private disableMouseEnter = () => {
+    this.isMouseenterDisabled = true;
+  };
+
+  private enableMouseEnter = () => {
+    window.clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      this.isMouseenterDisabled = false;
+    }, 300);
   };
 }
